@@ -21,6 +21,6 @@ chmod +x build.sh
 ```
 For running the script
 ```bash
-chmod +x build.sh
+./build.sh
 ```
 
