@@ -7,12 +7,12 @@ Make sure you have docker installed and running, and follow the proper installat
 
 Open the folder named database and run the sql script for creating an instance of the DB.
 
-##### ** Windows ** 
+##### **Windows** 
 Open your cmd/terminal in the project folder, and run the following command:
 ```bash
 build
 ```
-##### ** MacOS ** 
+##### **MacOS** 
 Open your cmd/terminal in the project folder, and run the following commands:
 
 For making the script excutable
