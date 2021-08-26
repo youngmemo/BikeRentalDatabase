@@ -1,9 +1,9 @@
 # AMV-school-project
-## ** Project setup & installation ** 
+## **Project setup & installation** 
 
 Make sure you have docker installed and running, and follow the proper installation based on your OS
 
-##### ** Datebase setup **
+##### **Datebase setup**
 
 Open the folder named database and run the sql script for creating an instance of the DB.
 
