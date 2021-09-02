@@ -44,10 +44,7 @@ public class UserList extends Servlet {
                 user.setFirstName(rs.getString("first_name"));
 
                 user.setLastName(rs.getString("last_name"));
-                JSONObject member =  new JSONObject();
 
-                member.put("user", user.toJson());
-                json.put(member);
             }
 
 
@@ -56,7 +53,7 @@ public class UserList extends Servlet {
 
 
             PrintWriter pw = response.getWriter();
-            pw.print(json.toString());
+            pw.print("hallo dette er en test");
             pw.close();
             rs.close();
 
