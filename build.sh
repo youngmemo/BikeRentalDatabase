@@ -1,7 +1,7 @@
 #kills running instance of tomcat
 docker kill $(docker ps -q)
 
-docker run --rm --name mariadb -p 3309:3306/tcp -v "$(pwd)/database":/var/lib/mysql -e MYSQL_ROOT_PASSWORD=12345 -d mariadb
+docker run --rm --name mariadb -p 3308:3306/tcp -v "$(pwd)/database":/var/lib/mysql -e MYSQL_ROOT_PASSWORD=12345 -d mariadb
 
 # Compile and packages source code into .war file via maven volume in docker container
 docker run --rm -it --name mavenbuild -v maven-repo:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven mvn clean install
