@@ -1,3 +1,4 @@
+drop amv;
 create database amv;
 create table `equipment type`
 (
