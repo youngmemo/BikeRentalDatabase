@@ -1,7 +1,0 @@
-$StopWatch = [system.diagnostics.stopwatch]::startNew()
-For ($i=0; $i -le 1000; $i++) {
-    & 'C:\Program Files\Java\jdk-13.0.2\bin\java.exe' -cp "C:\Users\JG\java\" Message
-}
-$StopWatch.Stop()
-$StopWatch.Elapsed.TotalMilliseconds/1000
-$StopWatch.Elapsed.TotalSeconds/1000
