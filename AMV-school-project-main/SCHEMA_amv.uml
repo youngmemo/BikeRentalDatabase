@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>8ae85bce-1271-4891-b283-83a8fe46ec97.SCHEMA:amv</OriginalElement>
+  <nodes>
+    <node x="85.92857142857142" y="127.0">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment category</node>
+    <node x="465.9213731322484" y="198.94038582475184">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.user</node>
+    <node x="253.0" y="621.0">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.rent</node>
+    <node x="102.87666250081227" y="346.02746074515125">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment</node>
+    <node x="464.0514785616815" y="615.6503678782614">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.report</node>
+    <node x="0.0" y="643.0">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.restriction</node>
+    <node x="142.92857142857142" y="0.0">8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment type</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment category">
+      <point x="0.0" y="-60.5" />
+      <point x="0.0" y="82.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment category" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment type">
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.report" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.user">
+      <point x="41.75" y="-60.5" />
+      <point x="593.5091142727182" y="597.8442732167225" />
+      <point x="601.3312856493056" y="543.1450089732452" />
+      <point x="63.0" y="104.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.rent" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.user">
+      <point x="42.25" y="-82.5" />
+      <point x="379.75" y="601.0" />
+      <point x="454.17857142857144" y="601.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.report" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment">
+      <point x="-41.75" y="-60.5" />
+      <point x="493.17857142857144" y="571.0" />
+      <point x="298.0952380952381" y="571.0" />
+      <point x="77.66666666666669" y="60.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.rent" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment">
+      <point x="-42.25" y="-82.5" />
+      <point x="295.25" y="581.0" />
+      <point x="220.42857142857142" y="581.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.restriction" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.user">
+      <point x="58.25" y="-60.5" />
+      <point x="174.75" y="604.6748160608693" />
+      <point x="391.17857142857144" y="591.0" />
+      <point x="-63.0" y="104.5" />
+    </edge>
+    <edge source="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.restriction" target="8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment">
+      <point x="-58.25" y="-60.5" />
+      <point x="58.25" y="601.0" />
+      <point x="142.76190476190473" y="601.0" />
+      <point x="-77.66666666666669" y="60.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9627791563275434" x="327.5" y="393.0" />
+  <SelectedNodes>
+    <node>8ae85bce-1271-4891-b283-83a8fe46ec97.TABLE:amv.equipment category</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
