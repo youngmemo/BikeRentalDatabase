@@ -14,19 +14,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
+public class HomeServlet extends HttpServlet {
 
-    @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+
+
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+
 
     }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-
 
     }
 

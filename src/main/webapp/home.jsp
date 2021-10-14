@@ -1,9 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    </head>
+<jsp:include page="/header.jsp"/>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
-<body>
-<h1>welcome from java servlet <% String name= (String) session.getAttribute("name"); out.print(name);%></h1>
-</body>
-</html>
+<div class="d-flex justify-content-center align-items-center w-100 h-100">
+    <div>Hey from home page</div>
+</div>
+
+<jsp:include page="/footer.jsp"/>
