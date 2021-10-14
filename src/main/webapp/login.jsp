@@ -192,7 +192,7 @@
         <p>Please enter your details to sign into your account</p>
     </hgroup>
 
-    <form autocomplete="off" action="/login" method = "post" class = "log-form">
+    <form autocomplete="off" action="/" method = "post" class = "log-form">
 
         <div class="group log-input">
             <input type="text" id = "username" name = "email" placeholder = "Username">
