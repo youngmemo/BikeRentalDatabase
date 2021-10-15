@@ -20,7 +20,7 @@ public class IndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        System.out.println("From index servlet");
+        System.out.println("hello from index servlet");
         request.getRequestDispatcher("index.jsp").forward(request, response);
 
 
