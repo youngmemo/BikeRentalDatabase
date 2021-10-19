@@ -26,7 +26,9 @@ public class IndexServlet extends HttpServlet {
 
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        HttpSession session = request.getSession();
+        session.setAttribute("email", null);
+        response.sendRedirect("/");
     }
 
 }
