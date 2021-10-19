@@ -1,3 +1,7 @@
+drop database if exists amv;
+create database amv;
+use amv;
+
 create table `equipment type`
 (
     id   int auto_increment
