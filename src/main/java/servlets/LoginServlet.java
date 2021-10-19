@@ -25,6 +25,20 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String email = (String) request.getParameter("email");
+        String password = (String) request.getParameter("password");
+        HttpSession session = request.getSession();
+        if(Validating.validateUser(email, password)){
+            session.setAttribute("email", email);
+            session.setAttribute("error", null);
+            response.sendRedirect("/home");
+        }
+        else{
+            session.setAttribute("error", "Incorrect email or password");
+            session.setAttribute("email", null);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+
+        }
 
 
 
