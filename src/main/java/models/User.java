@@ -4,11 +4,36 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
+    private String password;
     private String tlf;
-    private boolean isSuperUser;
-    private boolean isUnion;
+    private boolean is_union;
+    private boolean is_superuser;
+    private String salt;
+
+    public boolean isIs_union() {
+        return is_union;
+    }
+
+    public void setIs_union(boolean is_union) {
+        this.is_union = is_union;
+    }
+
+    public boolean isIs_superuser() {
+        return is_superuser;
+    }
+
+    public void setIs_superuser(boolean is_superuser) {
+        this.is_superuser = is_superuser;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public int getId() {
         return id;
@@ -34,20 +59,20 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getTlf() {
@@ -58,19 +83,33 @@ public class User {
         this.tlf = tlf;
     }
 
-    public boolean isSuperUser() {
-        return isSuperUser;
+    public boolean is_union() {
+        return is_union;
     }
 
-    public void setSuperUser(boolean superUser) {
-        isSuperUser = superUser;
+    public void set_union(boolean is_union) {
+        this.is_union = is_union;
     }
 
-    public boolean isUnion() {
-        return isUnion;
+    public boolean is_superuser() {
+        return is_superuser;
     }
 
-    public void setUnion(boolean union) {
-        isUnion = union;
+    public void set_superuser(boolean is_superuser) {
+        this.is_superuser = is_superuser;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "id:" + id +
+                ", firstName:" + firstName +
+                ", lastName:" + lastName +
+                ", email:" + email +
+                ", password:" + password +
+                ", tlf:" + tlf +
+                ", is_union:" + is_union +
+                ", is_superuser:" + is_superuser
+                ;
     }
 }
