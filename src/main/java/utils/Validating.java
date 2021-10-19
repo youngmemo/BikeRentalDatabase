@@ -47,11 +47,10 @@ public class Validating {
         User user = null;
         try {
             db = DBUtils.getINSTANCE().getConnection();
-            String query = "SELECT email, password FROM amv.user WHERE email = ? AND password = ?";
+            String query = "SELECT password,salt FROM amv.user WHERE email = ?";
             ResultSet rs;
             ps = db.prepareStatement(query);
             ps.setString(1, email);
-            ps.setString(2, password);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -62,10 +61,10 @@ public class Validating {
             if (user != null) {
                 if (user.getEmail().equals(email)) {
                     return user.getPassword().equals(password);
-                } else {
-                    return false;
                 }
+                return false;
             }
+            return false;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
