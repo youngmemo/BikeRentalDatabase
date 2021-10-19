@@ -55,14 +55,10 @@ public class Validating {
 
             while (rs.next()) {
                 user = new User();
-                user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
             }
             if (user != null) {
-                if (user.getEmail().equals(email)) {
-                    return user.getPassword().equals(password);
-                }
-                return false;
+                return user.getPassword().equals(password);
             }
             return false;
         } catch (SQLException | ClassNotFoundException e) {
