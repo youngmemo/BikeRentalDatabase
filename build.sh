@@ -11,12 +11,12 @@ docker image build -t trym/tomcat .
 
 # Start tomcat container, making the webapp available.
 docker container run --rm -it -d --name tomcat --publish 8081:8080 trym/tomcat
-docker logs -f tomcat
-
 echo ""
 echo "Link: http://localhost:8081/"
 echo ""
+docker logs -f tomcat
 
-read -n 1 -s -r -p "Press any key to continue..."
-echo ""
+
+
+
 

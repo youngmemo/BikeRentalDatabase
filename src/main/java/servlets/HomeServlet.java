@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 
 @WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet {
+public class HomeServlet extends Servlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

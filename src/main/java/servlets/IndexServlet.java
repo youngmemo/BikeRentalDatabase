@@ -15,12 +15,11 @@ import java.sql.SQLException;
 
 
 @WebServlet(name = "IndexServlet", urlPatterns = {""})
-public class IndexServlet extends HttpServlet {
+public class IndexServlet extends Servlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        System.out.println("hello from index servlet");
         request.getRequestDispatcher("index.jsp").forward(request, response);
 
 
