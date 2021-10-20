@@ -3,6 +3,7 @@
 
 <div class="d-flex justify-content-center align-items-center w-100 h-100">
     <form action="/login" method = "post">
+        <input type="hidden" name="csrf" value="<% out.print(session.getAttribute("csrf")); %>">
         <%
             if(session.getAttribute("error") != null)
                 out.println("<div class='alert alert-danger' role='alert'>" + session.getAttribute("error") + "</div>");
@@ -18,6 +19,7 @@
             <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp" placeholder="Enter password" name="password" required>
             <small id="passwordHelp" class="form-text text-muted">We'll never share your password with anyone else.</small>
         </div>
+
         <button class="btn btn-primary" type="submit">
             Login
         </button>

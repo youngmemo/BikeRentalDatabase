@@ -1,4 +1,5 @@
 package utils;
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Base64;
 
 import java.security.MessageDigest;
@@ -57,7 +58,7 @@ public class SecureUtils {
         return Base64.encodeBase64String(salt);
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws NoSuchAlgorithmException, EncoderException {
 
         // same salt should be passed
         String salt = makeSalt();
@@ -69,5 +70,7 @@ public class SecureUtils {
         if (password1.equals(password2)) {
             System.out.println("passwords are equal");
         }
+
     }
 }
+
