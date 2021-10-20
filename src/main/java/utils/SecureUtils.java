@@ -58,6 +58,9 @@ public class SecureUtils {
         return Base64.encodeBase64String(salt);
     }
 
+    /**
+     * main method for testing and generating password and salt
+     * */
     public static void main(String[] args) throws NoSuchAlgorithmException, EncoderException {
 
         // same salt should be passed
