@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-CREATE TABLE Bruker
-(
-    Bruker_ID           SMALLINT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL,
-    Navn                VARCHAR(50)     NOT NULL,
-    Mail                VARCHAR(320)    NOT NULL,
-    Mobilnummer         NUMBER(15)      NOT NULL,
-    Adresse             VARCHAR(46)     NOT NULL,
-    Postnummer          NUMBER(5)       NOT NULL
-);
-
-ALTER TABLE Bruker ADD (
-    CONSTRAINT bruker_pk PRIMARY KEY (Bruker_ID)
-);
-
-=======
 DROP TABLE Bruker;
 DROP TABLE Program;
 DROP TABLE Stasjon;
@@ -301,4 +285,3 @@ INSERT INTO Sykkel_Status (Sykkel_ID, Sykkel_Tilgjengelig, Breddegrad, Lengdegra
 VALUES (2, 1, 10.25845, 12.48596);
 
 commit;
->>>>>>> 4f4f97e (Pushet opp :))
