@@ -411,8 +411,8 @@ VALUES (3, 1, 'Årlig','01-MAR-2020', '01-MAR-2021');
 INSERT INTO Medlemskap (Bruker_ID, Medlemstatus, Medlemstype, Kjops_Dato, Utlops_Dato)
 VALUES (4, 1, 'Årlig','30-JAN-2020', '30-JAN-2021');
 
-INSERT INTO Tur (Start_Stasjon_ID, Slutt_Stasjon_ID, Start_Tid, Slutt_Tid, Total_Distanse)
-VALUES (9, 9, TO_DATE('25-12-20 10:10:01', 'DD-MM-YY HH24:MI:SS'), TO_DATE('25-12-20 11:10:10', 'DD-MM-YY HH24:MI:SS'), 35);
+INSERT INTO Medlemskap (Bruker_ID, Medlemstatus, Medlemstype, Kjops_Dato, Utlops_Dato)
+VALUES (5, 1, 'Månedlig', '25-JAN-2020', '25-FEB-2020');
 
 
 
