@@ -309,11 +309,6 @@ VALUES ('NO', 'Stavanger','STV','stavangersykkel', 39129229, 'GMT+1','bcycle.sta
 
 INSERT INTO Program (Land, Sted, Alias, Navn, Telefonnummer, Tidssone, URL, Mail)
 VALUES ('NO', 'Bergen', 'BERG', 'bergensykkel', 47352637, 'GMT+1', 'bcycle.bergen.com', 'bergen@bcycle.com');
-  
-INSERT INTO Program (Land, Sted, Alias, Navn, Telefonnummer, Tidssone, URL, Mail)
-VALUES ('NO', 'Stavanger','STV','stavangersykkel', 39129229, 'GMT+1','bcycle.trondheim.com','trondheim@bcycle.com');
-
-
 
 
 
