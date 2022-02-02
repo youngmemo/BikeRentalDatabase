@@ -394,7 +394,7 @@ VALUES (4, 4, 4, 4, 0);
 
 
 
--- Legger inn testdata til tabellen 'Sykkel_Status'.
+-- Legger inn testdata til tabellen 'Sykkel_Status'
 INSERT INTO Sykkel_Status (Sykkel_ID, Sykkel_Tilgjengelig, Breddegrad, Lengdegrad, Strom)
 VALUES (1, 1, 13.56473, 87.57685, 100);
 
