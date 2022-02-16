@@ -1,4 +1,4 @@
-create procedure BEGIN_TRIP_SP (
+create or replace procedure BEGIN_TRIP_SP (
     p_trip_id               OUT INTEGER,        -- an output parameter
     p_bicycle_id            IN INTEGER,         -- Must not be NULL.  Must match value value in BC_BICYCLE and BC_DOCK tables.
     p_start_time            IN DATE,            -- If NULL, use CURRENT_DATE system date value
@@ -97,10 +97,10 @@ BEGIN
     FROM BC_DOCK
     WHERE BC_DOCK.BICYCLE_ID = p_bicycle_id;
 
-    -- UPDATING THE TABLE DOCK XXXXXXXXXXXX
+    -- UPDATING THE TABLE DOCK XXXXXXXXXXXXEYWAHHHAHSDHASDHASDHAUSDHUSAHDUSAD
     -- For example, the status of the dock at which the bicycle had been parked will be set to 'available'.
     UPDATE BC_DOCK
-    SET DOCK_STATUS = 'Available'
+    SET DOCK_STATUS = 'unoccupied'
     WHERE BC_DOCK.BICYCLE_ID = p_bicycle_id;
 
 
@@ -163,12 +163,14 @@ BEGIN
         WHERE BC_STATION.STATION_ID = lv_start_station;
     end if;
 
+
     --INSERTER
     -- CHECKS IF START_TIME = NULL AND THEN INSERTS THE PARAMETERS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     IF p_start_time IS NULL THEN
         INSERT INTO BC_TRIP (
         TRIP_ID,
         BICYCLE_ID,
+        START_STATION_ID,
         TRIP_START_TIME,
         MEMBERSHIP_ID
         )
@@ -176,6 +178,7 @@ BEGIN
         VALUES (
         (select max(TRIP_ID) + 1 FROM BC_TRIP),
         p_bicycle_id,
+        lv_start_station,
         CURRENT_DATE,
         p_membership_id
         )
@@ -185,6 +188,7 @@ BEGIN
         INSERT INTO BC_TRIP (
         TRIP_ID,
         BICYCLE_ID,
+        START_STATION_ID,
         TRIP_START_TIME,
         MEMBERSHIP_ID
         )
@@ -192,17 +196,14 @@ BEGIN
         VALUES (
         (select max(TRIP_ID) + 1 FROM BC_TRIP),
         p_bicycle_id,
+        lv_start_station,
         p_start_time,
         p_membership_id
         )
         RETURNING TRIP_ID INTO p_trip_id;
     end if;
 
-    UPDATE BC_TRIP
-    SET START_STATION_ID = lv_start_station
-    WHERE BC_TRIP.TRIP_ID = p_trip_id;
-
-EXCEPTION
+    EXCEPTION
     WHEN ex_missing_value THEN
     DBMS_OUTPUT.PUT_LINE(lv_missing_value_txt);
     ROLLBACK;
@@ -225,6 +226,5 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
 
-END BEGIN_TRIP_SP;
-/
 
+END BEGIN_TRIP_SP;
