@@ -1,0 +1,25 @@
+- For example, the status of the dock at which the bicycle had been parked will be set to 'available'.
+
+- Determines the start station.  The start station is not passed in as a parameter.  The start station will be determined by
+  the procedure by determining the station associated with the dock at which the bicycle is currently docked.
+
+- Updates the station status.  If the station had been full (station_is_returning = 0) then station_is_returning is set to true (1).
+
+- Updates the status of the bicycle to 'in use'.
+
+- Returns the identifier of the new trip.
+
+
+BC_STATION   
+	COLUMNS TO FIX
+	
+	Station vehicles available
+	Station docks available
+	Station is renting
+	Station is returning
+	Station last reported
+
+BC_DOCK
+	Bicycle_ID
+	DOCK_STATUS
+	HENTE STASJON_IDEN SYKKELEN VAR I OVER TIL BC_STATION FOR Å ENDRE DEN.
