@@ -3,15 +3,13 @@ create or replace procedure BEGIN_TRIP_SP (
     p_bicycle_id            IN INTEGER,         -- Must not be NULL.  Must match value value in BC_BICYCLE and BC_DOCK tables.
     p_start_time            IN DATE,            -- If NULL, use CURRENT_DATE system date value
     p_membership_id         IN INTEGER          -- Must not be NULL.  Must match value in BC_MEMBERSHIP table.
-    )
-IS
-    ex_missing_value            EXCEPTION;
-    ex_invalid_membership       EXCEPTION;
-    ex_invalid_bicycleid        EXCEPTION;
-    ex_not_docked               EXCEPTION;
+)
+    IS
 
-    lv_missing_value_txt        VARCHAR2(200);
-    lv_invalid_membership_txt   VARCHAR2(200);
+ex_capacity_exceeded        EXCEPTION;
+    ex_error                    EXCEPTION;
+
+    lv_error_txt                VARCHAR2(200);
     lv_match_bicycle            INTEGER;
     lv_match_membership         INTEGER;
     lv_bicycle_docked           INTEGER;
@@ -19,108 +17,114 @@ IS
     lv_vehicles_available       INTEGER;
     lv_docks_available          INTEGER;
 
-    lv_memberpass_start         DATE;           -- FIX SO IT CHANGES WITH THE DATABASE
-    lv_memberpass_end           DATE;           -- FIX SO IT CHANGES WITH THE DATABASE
+    lv_memberpass_start         DATE;
+    lv_memberpass_end           DATE;
 
 
 BEGIN
-    -- CHECKS IF BICYCLE ID = NULL
+    -- Checks if something is written in the p_bicycle_id parameter
     IF p_bicycle_id IS NULL THEN
-        lv_missing_value_txt := 'Missing mandatory value for parameter (Bicycle_ID) in BEGIN_TRIP_SP.  No trip added.';
-        RAISE ex_missing_value;
+        lv_error_txt := 'Missing mandatory value for parameter (Bicycle_ID) in BEGIN_TRIP_SP.  No trip added.';
+        RAISE ex_error;
     end if;
 
-     -- CHECKS IF MEMBERSHIP_ID = NULL
+    -- Checks if something is written in the p_membership_id parameter
     IF p_membership_id IS NULL THEN
-        lv_missing_value_txt := 'Missing mandatory value for parameter (Membership_ID) in BEGIN_TRIP_SP.  No trip added.';
-        RAISE ex_missing_value;
+        lv_error_txt := 'Missing mandatory value for parameter (Membership_ID) in BEGIN_TRIP_SP.  No trip added.';
+        RAISE ex_error;
     end if;
 
-    -- CHECKS IF BICYCLE PARAMETER IS IN THE BICYCLE TABLE
+    -- Checks if the value written in the p_bicycle_id parameter is in the BC_Bicycle table.
+    -- If not, throws an exception.
     SELECT COUNT(*)
     INTO lv_match_bicycle
     FROM BC_BICYCLE
     WHERE BC_BICYCLE.BICYCLE_ID = p_bicycle_id;
 
     IF lv_match_bicycle <= 0 THEN
-        RAISE ex_invalid_bicycleid;
+        lv_error_txt := 'Invalid bicycle identifier: ' || p_bicycle_id;
+        RAISE ex_error;
     end if;
 
-    -- NOT CURRENTLY DOCKED BICYCLE
+    -- Checks if the value written in the p_bicycle_id parameter is in the BC_DOCK table.
+    -- If not, throws an exception.
     SELECT COUNT(*)
     INTO lv_bicycle_docked
     FROM BC_DOCK
     WHERE BC_DOCK.BICYCLE_ID = p_bicycle_id;
 
     IF lv_bicycle_docked <= 0 THEN
-        RAISE ex_invalid_bicycleid;
+        lv_error_txt := 'Bicycle: ' || p_bicycle_id || ' is not currently docked.';
+        RAISE ex_error;
     end if;
 
-    --CHECKS IF MEMBERPASS START TIME IS OKAY
+    -- Checks if the membership is valid on the day the user is going to rent the bike.
+    -- If not, throws an exception.
     IF lv_memberpass_start > p_start_time OR lv_memberpass_end < p_start_time THEN
-        lv_invalid_membership_txt := 'Invalid Membership: ' || p_membership_id;
-        RAISE ex_invalid_bicycleid;
+        lv_error_txt := 'Invalid Membership: ' || p_membership_id;
+        RAISE ex_error;
     end if;
 
-    -- CHECKS IF MEMBERSHIP PARAMETER IS IN MEMBERSHIP TABLE
+    -- Checks if the value written in the p_membership_id parameter is in the BC_Membership table.
+    -- If not, throws an exception.
     SELECT COUNT(*)
     INTO lv_match_membership
     FROM BC_MEMBERSHIP
     WHERE BC_MEMBERSHIP.MEMBERSHIP_ID = p_membership_id;
 
     IF lv_match_membership <= 0 THEN
-        lv_invalid_membership_txt := 'Invalid Membership: ' || p_membership_id;
-        RAISE ex_invalid_membership;
+        lv_error_txt := 'Invalid Membership: ' || p_membership_id;
+        RAISE ex_error;
     end if;
 
-    --SELECTS MEMBERS START TIME INTO LOCAL VARIABLE
+    -- Assigns the given membership id's starttime into the variable lv_memberpass_start
     SELECT MEMBER_PASS_START_TIME
     INTO lv_memberpass_start
     FROM BC_MEMBERSHIP
     WHERE BC_MEMBERSHIP.MEMBERSHIP_ID = p_membership_id;
 
-    --SELECTS MEMBERS END TIME INTO LOCAL VARIABLE
+    -- Assigns the given membership id's starttime into the variable lv_memberpass_end
     SELECT MEMBER_PASS_END_TIME
     INTO lv_memberpass_end
     FROM BC_MEMBERSHIP
     WHERE BC_MEMBERSHIP.MEMBERSHIP_ID = p_membership_id;
 
-    --UPDATING THE TABLE BICYCLE
-    -- Updates the status of the bicycle to 'in use'.
+
+    -- Updates the status of the bicycle to 'in use' with the bicycle given in the parameter p_bicycle_id.
     UPDATE BC_BICYCLE_STATUS
     SET BICYCLE_STATUS = 'in use'
     WHERE BC_BICYCLE_STATUS.BICYCLE_ID = p_bicycle_id;
 
-    -- START STATION
+    -- Assigns the given bicycle id's start station into the variable lv_start_station
     SELECT STATION_ID
     INTO lv_start_station
     FROM BC_DOCK
     WHERE BC_DOCK.BICYCLE_ID = p_bicycle_id;
 
-    -- UPDATING THE TABLE DOCK XXXXXXXXXXXXEYWAHHHAHSDHASDHASDHAUSDHUSAHDUSAD
-    -- For example, the status of the dock at which the bicycle had been parked will be set to 'available'.
+    -- Updates the BC_Dock table's columns: status and bicycle ID to make the dock available.
     UPDATE BC_DOCK
-    SET DOCK_STATUS = 'unoccupied'
+    SET DOCK_STATUS = 'unoccupied', BICYCLE_ID = null
     WHERE BC_DOCK.BICYCLE_ID = p_bicycle_id;
 
-
-    -- UPDATING THE TABLE BC_STATION XXXXXXXXXXXX
-    -- UPDATES SO THAT ITS 1 LESS VEHICLE AVAILABLE BECAUSE A TRIP HAS STARTED
+    -- Updates BC_Station table's columns so that its one less available bike on the station the bicycle has been rented from.
     UPDATE BC_STATION
     SET STATION_VEHICLES_AVAILABLE = STATION_VEHICLES_AVAILABLE - 1
     WHERE STATION_ID = lv_start_station;
 
-    -- UPDATES SO THAT ITS 1 MORE DOCK AVAILABLE BECAUSE A TRIP HAS STARTED
+    -- Updates BC_Station table's columns so that its one more available dock on the station the bicycle has been rented from.
     UPDATE BC_STATION
     SET STATION_DOCKS_AVAILABLE = BC_STATION.STATION_DOCKS_AVAILABLE + 1
     WHERE STATION_ID = lv_start_station;
 
-    -- CHECKS IF THE STATION IS RENTING OR NOT
+    -- Assigns the value of the total bikes available into a variable called lv_vehicles_available.
     SELECT STATION_VEHICLES_AVAILABLE
     INTO lv_vehicles_available
     FROM BC_STATION
     WHERE BC_STATION.STATION_ID = lv_start_station;
 
+    -- Checks if the station has vehicles available.
+    -- If it does have vehicles available it updates the station to renting.
+    -- If it does not have vehicles available it updates the station to not renting.
     IF lv_vehicles_available > 0 THEN
         UPDATE BC_STATION
         SET STATION_IS_RENTING = 1
@@ -139,12 +143,15 @@ BEGIN
         WHERE BC_STATION.STATION_ID = lv_start_station;
     end if;
 
-    --CHECKS IF THE STATION IS RETURNING
+    -- Assigns the value of the total docks available into a variable called lv_docks_available.
     SELECT STATION_DOCKS_AVAILABLE
     INTO lv_docks_available
     FROM BC_STATION
     WHERE BC_STATION.STATION_ID = lv_start_station;
 
+    -- Checks if the station has docks available.
+    -- If it does have docks available it updates the station to returning.
+    -- If it does not have docks available it updates the station to not returning.
     IF lv_docks_available = 0 THEN
         UPDATE BC_STATION
         SET STATION_IS_RETURNING = 0
@@ -163,68 +170,55 @@ BEGIN
         WHERE BC_STATION.STATION_ID = lv_start_station;
     end if;
 
-
-    --INSERTER
-    -- CHECKS IF START_TIME = NULL AND THEN INSERTS THE PARAMETERS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    -- Checks if start_time is null and then inserts with the given start time.
+    -- If not, inserts start_time with the current_date function.
     IF p_start_time IS NULL THEN
         INSERT INTO BC_TRIP (
-        TRIP_ID,
-        BICYCLE_ID,
-        START_STATION_ID,
-        TRIP_START_TIME,
-        MEMBERSHIP_ID
+            TRIP_ID,
+            BICYCLE_ID,
+            START_STATION_ID,
+            TRIP_START_TIME,
+            MEMBERSHIP_ID
         )
 
         VALUES (
-        (select max(TRIP_ID) + 1 FROM BC_TRIP),
-        p_bicycle_id,
-        lv_start_station,
-        CURRENT_DATE,
-        p_membership_id
-        )
+                   (select max(TRIP_ID) + 1 FROM BC_TRIP),
+                   p_bicycle_id,
+                   lv_start_station,
+                   CURRENT_DATE,
+                   p_membership_id
+               )
         RETURNING TRIP_ID INTO p_trip_id;
 
     ELSE
         INSERT INTO BC_TRIP (
-        TRIP_ID,
-        BICYCLE_ID,
-        START_STATION_ID,
-        TRIP_START_TIME,
-        MEMBERSHIP_ID
+            TRIP_ID,
+            BICYCLE_ID,
+            START_STATION_ID,
+            TRIP_START_TIME,
+            MEMBERSHIP_ID
         )
 
         VALUES (
-        (select max(TRIP_ID) + 1 FROM BC_TRIP),
-        p_bicycle_id,
-        lv_start_station,
-        p_start_time,
-        p_membership_id
-        )
+                   (select max(TRIP_ID) + 1 FROM BC_TRIP),
+                   p_bicycle_id,
+                   lv_start_station,
+                   p_start_time,
+                   p_membership_id
+               )
         RETURNING TRIP_ID INTO p_trip_id;
     end if;
 
-    EXCEPTION
-    WHEN ex_missing_value THEN
-    DBMS_OUTPUT.PUT_LINE(lv_missing_value_txt);
-    ROLLBACK;
-
-    WHEN ex_invalid_membership THEN
-    DBMS_OUTPUT.PUT_LINE(lv_invalid_membership_txt);
-    ROLLBACK;
-
-    WHEN ex_invalid_bicycleid THEN
-    DBMS_OUTPUT.PUT_LINE('Invalid bicycle ID: ' || p_bicycle_id);
-    ROLLBACK;
-
-    WHEN ex_not_docked THEN
-    DBMS_OUTPUT.PUT_LINE('Bicycle: ' || p_bicycle_id || ' is not currently docked.');
-    ROLLBACK;
+EXCEPTION
+    WHEN ex_error THEN
+        DBMS_OUTPUT.PUT_LINE(lv_error_txt);
+        ROLLBACK;
 
     WHEN OTHERS THEN
-    DBMS_OUTPUT.PUT_LINE('An error occurred.');
-    DBMS_OUTPUT.PUT_LINE('Error code:    ' || SQLCODE);
-    DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
-    ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('An error occurred.');
+        DBMS_OUTPUT.PUT_LINE('Error code:    ' || SQLCODE);
+        DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
+        ROLLBACK;
 
-
+        commit;
 END BEGIN_TRIP_SP;
