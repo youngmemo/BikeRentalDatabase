@@ -209,7 +209,7 @@ procedure UPDATE_BICYCLE_STATUS_PP (
 
 /* 
     NUMBER_OF_BICYCLES_PF.  This function takes as input parameters a station 
-    identifier and a type of bicycle (‘electric’, ‘cargo’, ‘classic’, ‘smart’) 
+    identifier and a type of bicycle (ï¿½electricï¿½, ï¿½cargoï¿½, ï¿½classicï¿½, ï¿½smartï¿½) 
     and returns the number of bicycles of this type docked at this station. 
     The procedure should function correctly regardless of the case of the input parameter.
     p_bicycle_type values of ('electric', 'ELECTRIC', 'Electric') should all produce
@@ -227,7 +227,7 @@ function NUMBER_OF_BICYCLES_PF (
     ) RETURN INTEGER;
     
 /*  REMOVE_BICYCLE_PP.  This procedure takes a bicycle out of service, removing 
-    it from its dock and setting its status to ‘unavailable’.  This procedure also
+    it from its dock and setting its status to ï¿½unavailableï¿½.  This procedure also
     calls the UPDATE_BICYCLE_STATUS_PP procedure with NULL values for the latitude and 
     longitude and a status value of 'unavailable'.  In this way the bicycle status
     log reflects the fact that the bicycle has been taken out of service.  In short, 
@@ -247,7 +247,7 @@ procedure REMOVE_BICYCLE_PP (
     
 /* 
 LIST_AVAILABLE_BICYCLES_PP.  This procedure prints out a list of the bicycles 
-that are available at a given station, together with each bicycle’s type.  The 
+that are available at a given station, together with each bicycleï¿½s type.  The 
 procedure should print (DBMS_OUTPUT.PUT_LINE) each bicycle's id and type.  If 
 no bicycles are available in the station, the procedure should print "No bicycles available."
 

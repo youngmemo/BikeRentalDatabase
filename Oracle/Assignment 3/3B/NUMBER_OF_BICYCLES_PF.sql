@@ -4,14 +4,16 @@ function NUMBER_OF_BICYCLES_PF (
     ) RETURN INTEGER
     IS
 
-    lv_match_stationid      VARCHAR(200);
-    lv_error_txt            VARCHAR(200);
-    lv_lowercase_type       VARCHAR(200);
+    lv_match_stationid      VARCHAR2(200);
+    lv_error_txt            VARCHAR2(200);
+    lv_lowercase_type       VARCHAR2(200);
     lv_total_amount         INTEGER;
     
     ex_error                EXCEPTION;
 
 BEGIN
+
+    lv_lowercase_type := LOWER(p_bicycle_type);
 
     IF p_station_id IS NULL THEN
         lv_error_txt := 'Missing mandatory value for p_station_id in NUMBER_OF_BICYCLES_PF.';
@@ -36,15 +38,7 @@ BEGIN
     SELECT COUNT(BICYCLE_TYPE)
     INTO lv_total_amount
     FROM BC_BICYCLE
-             JOIN BC_DOCK ON BC_BICYCLE.BICYCLE_ID = BC_DOCK.BICYCLE_ID
-    WHERE BC_DOCK.STATION_ID = p_station_id;
-
-    lv_lowercase_type := LOWER(p_bicycle_type);
-
-    SELECT COUNT(BICYCLE_TYPE)
-    INTO lv_total_amount
-    FROM BC_BICYCLE
-             JOIN BC_DOCK ON BC_BICYCLE.BICYCLE_ID = BC_DOCK.BICYCLE_ID
+        JOIN BC_DOCK ON BC_BICYCLE.BICYCLE_ID = BC_DOCK.BICYCLE_ID
     WHERE BC_DOCK.STATION_ID = p_station_id
       AND BC_BICYCLE.BICYCLE_TYPE = lv_lowercase_type;
 
