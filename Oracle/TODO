@@ -1,0 +1,7 @@
+TODO
+
+- Jeg må fikse slik at ERROR-ene som blir forårsaket blir logget.
+- Jeg må finpusse strukturen sånn at det ser fint ut.
+- Jeg må fikse slik at de andre assignmentene har mye penere struktur og nyttigere bruk av lokale variabler med tanke på navn osv og forkorte kanskje antall og repetering av kode.
+- Jeg må kommentere mine koder for 3A
+- Spørre Peter eller LA om NULL value på range og power kolonnene på REMOVE_BICYCLE_PP
