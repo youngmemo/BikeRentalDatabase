@@ -12,7 +12,7 @@ procedure REMOVE_BICYCLE_PP (
     BEGIN
 
         IF p_bicycle_id IS NULL THEN
-            lv_error_txt := '-------------------------------';
+            lv_error_txt := 'Missing mandatory for parameter (Bicycle_ID) in REMOVE_BICYCLE_PP. No bicycle removed.';
             RAISE ex_error;
         end if;
 
