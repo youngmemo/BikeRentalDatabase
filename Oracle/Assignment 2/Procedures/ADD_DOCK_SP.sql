@@ -8,11 +8,11 @@ create or replace procedure ADD_DOCK_SP (
     IS
 
     ex_error                   EXCEPTION;
-CHECK_CONSTRAINT_VIOLATED  EXCEPTION;
+    CHECK_CONSTRAINT_VIOLATED  EXCEPTION;
     PRAGMA EXCEPTION_INIT(CHECK_CONSTRAINT_VIOLATED, -2290);
 
-lv_error_txt           VARCHAR(200);
-lv_dock_exists         INTEGER;
+    lv_error_txt           VARCHAR(200);
+    lv_dock_exists         INTEGER;
     lv_station_exists      INTEGER;
     lv_bicycle_exists      INTEGER;
 
@@ -30,11 +30,6 @@ BEGIN
 
     IF p_dock_status IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter (DOCK_STATUS) in ADD_DOCK_SP. No dock added';
-        RAISE ex_error;
-    END IF;
-
-    IF p_bicycle_id IS NULL THEN
-        lv_error_txt := 'Missing mandatory value for parameter (BICYCLE_ID) in ADD_DOCK_SP. No dock added';
         RAISE ex_error;
     END IF;
 

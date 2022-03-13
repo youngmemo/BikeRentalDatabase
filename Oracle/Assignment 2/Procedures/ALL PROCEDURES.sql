@@ -33,11 +33,6 @@ BEGIN
         RAISE ex_error;
     END IF;
 
-    IF p_bicycle_id IS NULL THEN
-        lv_error_txt := 'Missing mandatory value for parameter (BICYCLE_ID) in ADD_DOCK_SP. No dock added';
-        RAISE ex_error;
-    END IF;
-
     SELECT COUNT(*)
     INTO lv_dock_exists
     FROM BC_DOCK
