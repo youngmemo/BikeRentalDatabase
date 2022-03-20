@@ -15,7 +15,6 @@ IS
     ex_error                           EXCEPTION;
 
 BEGIN
-    -- to_date('22/02/2022 00:00:00', 'dd/mm/yyyy hh24:mi:ss');
 
     -- Checks if value is written in the p_program_id parameter
     -- If not, raises exception.
@@ -136,19 +135,3 @@ BEGIN
     ROLLBACK;
 
     END BICYCLE_SUMMARY_PP;
-
-
-
-/*
-declare
-        P_START_DATE DATE           := to_date('01/01/2022', 'dd/mm/yyyy');
-        P_END_DATE   DATE           := to_date('22/01/2022', 'dd/mm/yyyy');
-        P_PROGRAM_ID VARCHAR2(4000) := 'bcycle_heartland';
-begin
-        BICYCLE_SUMMARY_PP(
-            P_START_DATE => P_START_DATE,
-            P_END_DATE => P_END_DATE,
-            P_PROGRAM_ID => P_PROGRAM_ID
-        );
-        end;
-*/
