@@ -78,7 +78,7 @@ BEGIN
         STATION_LAST_REPORTED = lv_final_date
     WHERE BC_STATION.STATION_ID = p_station_id;
 
-    
+
     EXCEPTION
     WHEN ex_error THEN
     DBMS_OUTPUT.PUT_LINE(lv_error_txt);
