@@ -99,6 +99,7 @@ BEGIN
     p_bicycle_id
     );
 
+    COMMIT;
 
     EXCEPTION
     WHEN ex_error THEN
@@ -113,7 +114,5 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('The error code is:  ' || SQLCODE);
     DBMS_OUTPUT.PUT_LINE('The error msg is: ' || SQLERRM);
     ROLLBACK;
-
-    COMMIT;
 
 END ADD_DOCK_PP;

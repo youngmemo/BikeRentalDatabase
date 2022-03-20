@@ -178,6 +178,8 @@ BEGIN
 
     RETURNING TRIP_ID INTO p_trip_id;
 
+    COMMIT;
+
     EXCEPTION
     WHEN ex_error THEN
     DBMS_OUTPUT.PUT_LINE (lv_error_txt);
@@ -191,7 +193,5 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('The error code is:  ' || SQLCODE);
     DBMS_OUTPUT.PUT_LINE('The error msg is:  ' || SQLERRM);
     ROLLBACK;
-
-    COMMIT;
 
 END END_TRIP_PP;

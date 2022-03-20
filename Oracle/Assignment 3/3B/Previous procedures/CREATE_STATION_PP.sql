@@ -163,6 +163,7 @@ BEGIN
     p_program_id
     );
 
+    COMMIT;
 
 EXCEPTION
     WHEN ex_error THEN
@@ -174,7 +175,5 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Error code:    ' || SQLCODE);
     DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
-
-    COMMIT;
 
 END CREATE_STATION_PP;

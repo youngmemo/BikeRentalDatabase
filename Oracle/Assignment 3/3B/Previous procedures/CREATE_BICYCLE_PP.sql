@@ -112,6 +112,8 @@ BEGIN
 
     RETURNING BICYCLE_ID INTO p_bicycle_id;
 
+    COMMIT;
+
     -- Error kode
     EXCEPTION
     WHEN ex_error THEN
@@ -129,7 +131,5 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Error code:    ' || SQLCODE);
     DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
-
-    COMMIT;
 
 END CREATE_BICYCLE_PP;

@@ -101,7 +101,6 @@ BEGIN
 
     COMMIT;
 
-
     EXCEPTION
     WHEN ex_error THEN
     DBMS_OUTPUT.PUT_LINE(lv_error_txt);

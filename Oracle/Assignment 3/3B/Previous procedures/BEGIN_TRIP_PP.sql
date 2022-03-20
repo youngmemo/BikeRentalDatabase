@@ -195,6 +195,7 @@ BEGIN
     )
     RETURNING TRIP_ID INTO p_trip_id;
 
+    COMMIT;
 
     EXCEPTION
     WHEN ex_error THEN
@@ -206,7 +207,5 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Error code:    ' || SQLCODE);
     DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
-
-    COMMIT;
 
 END BEGIN_TRIP_PP;

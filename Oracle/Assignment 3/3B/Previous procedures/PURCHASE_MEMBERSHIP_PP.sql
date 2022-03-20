@@ -130,6 +130,8 @@ BEGIN
     SET PASS_ID = lv_pass_id
     WHERE MEMBERSHIP_ID = p_membership_id;
 
+    COMMIT;
+
     EXCEPTION
         WHEN ex_error THEN
         DBMS_OUTPUT.PUT_LINE(lv_error_txt);
@@ -141,5 +143,4 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
         ROLLBACK;
 
-        commit;
 END PURCHASE_MEMBERSHIP_PP;

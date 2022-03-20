@@ -104,6 +104,7 @@ BEGIN
 
     RETURNING ACCOUNT_ID INTO p_account_id;
 
+    COMMIT;
 
 -- Exceptions med feilmeldinger
 EXCEPTION
@@ -116,7 +117,5 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error code:    ' || SQLCODE);
         DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
-
-COMMIT;
 
 END CREATE_ACCOUNT_PP;
