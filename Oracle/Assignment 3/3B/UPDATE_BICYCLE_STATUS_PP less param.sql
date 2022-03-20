@@ -39,12 +39,14 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+
     -- Checks if value is written in the p_bicycle_id parameter fits the CHECK constraint values
     -- If not, raises exception.
     IF p_status != 'in use' OR p_status != 'available' OR p_status != 'not available' THEN
         lv_error_txt := 'Invalid bicycle status ' || p_status;
         RAISE ex_error;
     END IF;
+
 
     -- Checks if latitude is between -90 and 90
     -- If not, raises exception.
@@ -60,6 +62,7 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+
     -- Checks if the written bicycle_id exists.
     -- If not, raises exception.
     SELECT COUNT(*)
@@ -71,6 +74,7 @@ BEGIN
         lv_error_txt := 'Invalid bicycle id ' || p_bicycle_id || ' in UPDATE_BICYCLE_STATUS_PP.  Bicycle status not updated.';
         RAISE ex_error;
     END IF;
+
 
     -- Inserts the values in the BC_BICYCLE_STATUS table.
     INSERT INTO BC_BICYCLE_STATUS
@@ -86,6 +90,7 @@ BEGIN
      p_longitude,
      p_status);
 
+
     -- Updates the BC_BICYCLE table for the given bicycle id.
     UPDATE BC_BICYCLE
     SET BICYCLE_LATITUDE = p_latitude,
@@ -95,6 +100,7 @@ BEGIN
     WHERE BICYCLE_ID = p_bicycle_id;
 
     COMMIT;
+
 
     EXCEPTION
     WHEN ex_error THEN

@@ -42,6 +42,7 @@ BEGIN
         lv_final_date := p_start_time;
     END IF;
 
+
     -- Checks if the value written in the p_bicycle_id parameter is in the BC_Bicycle table.
     -- If not, throws an exception.
     SELECT COUNT(*)
@@ -66,13 +67,6 @@ BEGIN
         RAISE ex_error;
     END IF;
 
-    -- Checks if the membership is valid on the day the user is going to rent the bike.
-    -- If not, throws an exception.
-    IF lv_memberpass_start > p_start_time OR lv_memberpass_end < p_start_time THEN
-        lv_error_txt := 'Invalid Membership: ' || p_membership_id;
-        RAISE ex_error;
-    END IF;
-
     -- Checks if the value written in the p_membership_id parameter is in the BC_Membership table.
     -- If not, throws an exception.
     SELECT COUNT(*)
@@ -84,6 +78,14 @@ BEGIN
         lv_error_txt := 'Invalid Membership: ' || p_membership_id;
         RAISE ex_error;
     END IF;
+
+    -- Checks if the membership is valid on the day the user is going to rent the bike.
+    -- If not, throws an exception.
+    IF lv_memberpass_start > p_start_time OR lv_memberpass_end < p_start_time THEN
+        lv_error_txt := 'Invalid Membership: ' || p_membership_id;
+        RAISE ex_error;
+    END IF;
+
 
     -- Assigns the given membership id's starttime into the variable lv_memberpass_start
     SELECT MEMBER_PASS_START_TIME
@@ -97,16 +99,28 @@ BEGIN
     FROM BC_MEMBERSHIP
     WHERE BC_MEMBERSHIP.MEMBERSHIP_ID = p_membership_id;
 
-    -- Updates the status of the bicycle to 'in use' with the bicycle given in the parameter p_bicycle_id.
-    UPDATE BC_BICYCLE_STATUS
-    SET BICYCLE_STATUS = 'in use'
-    WHERE BC_BICYCLE_STATUS.BICYCLE_ID = p_bicycle_id;
-
     -- Assigns the given bicycle id's start station into the variable lv_start_station
     SELECT STATION_ID
     INTO lv_start_station
     FROM BC_DOCK
     WHERE BC_DOCK.BICYCLE_ID = p_bicycle_id;
+
+    -- Assigns the value of the total bikes available into a variable called lv_vehicles_available.
+    SELECT STATION_VEHICLES_AVAILABLE
+    INTO lv_vehicles_available
+    FROM BC_STATION
+    WHERE BC_STATION.STATION_ID = lv_start_station;
+
+    -- Assigns the value of the total docks available into a variable called lv_docks_available.
+    SELECT STATION_DOCKS_AVAILABLE
+    INTO lv_docks_available
+    FROM BC_STATION
+    WHERE BC_STATION.STATION_ID = lv_start_station;
+
+    -- Updates the status of the bicycle to 'in use' with the bicycle given in the parameter p_bicycle_id.
+    UPDATE BC_BICYCLE_STATUS
+    SET BICYCLE_STATUS = 'in use'
+    WHERE BC_BICYCLE_STATUS.BICYCLE_ID = p_bicycle_id;
 
     -- Updates the BC_Dock table's columns: status and bicycle ID to make the dock available.
     UPDATE BC_DOCK
@@ -119,11 +133,6 @@ BEGIN
         STATION_DOCKS_AVAILABLE = BC_STATION.STATION_DOCKS_AVAILABLE + 1
     WHERE STATION_ID = lv_start_station;
 
-    -- Assigns the value of the total bikes available into a variable called lv_vehicles_available.
-    SELECT STATION_VEHICLES_AVAILABLE
-    INTO lv_vehicles_available
-    FROM BC_STATION
-    WHERE BC_STATION.STATION_ID = lv_start_station;
 
     -- Checks if the station has vehicles available.
     -- If it does have vehicles available it updates the station to renting.
@@ -146,11 +155,6 @@ BEGIN
         WHERE BC_STATION.STATION_ID = lv_start_station;
     end if;
 
-    -- Assigns the value of the total docks available into a variable called lv_docks_available.
-    SELECT STATION_DOCKS_AVAILABLE
-    INTO lv_docks_available
-    FROM BC_STATION
-    WHERE BC_STATION.STATION_ID = lv_start_station;
 
     -- Checks if the station has docks available.
     -- If it does have docks available it updates the station to returning.

@@ -60,6 +60,7 @@ BEGIN
     RAISE ex_error;
     END IF;
 
+
 -- Here we check if p_pass_type is 'Fun!Pass'
     IF p_pass_type = 'FUN!Pass' THEN
     -- If it is then the membership will be 1 today
@@ -73,6 +74,7 @@ BEGIN
     ELSIF p_pass_type = 'Heartland Pass (Annual pay)' THEN
     SELECT (p_start_time+365) INTO lv_end_date FROM DUAL;
     end if;
+
 
 --Here we give the lv_pass_id variable the value that will be on pass_id, for the pass_type.
     SELECT PASS_ID INTO lv_pass_id
@@ -101,6 +103,7 @@ BEGIN
     lv_error_txt := 'Invalid account: ' || p_account_id;
     RAISE ex_error;
     END IF;
+
 
  -- Inserts the parameters into the BC_MEMBERSHIP table
     INSERT INTO BC_MEMBERSHIP (

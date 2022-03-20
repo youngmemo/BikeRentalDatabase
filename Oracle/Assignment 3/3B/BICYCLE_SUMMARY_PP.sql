@@ -31,6 +31,7 @@ BEGIN
         RAISE ex_error;
    END IF;
 
+
     -- Checks if the program id written exists in the BC_PROGRAM table.
     -- If not, raises exception.
     SELECT COUNT(*)
@@ -54,6 +55,7 @@ BEGIN
         lv_error_txt := 'Invalid program id ' || p_program_id || '. The program id written is not found in the station table in BICYCLE_SUMMARY_PP.';
         RAISE ex_error;
     END IF;
+
 
     -- This is the version that runs if everything is right and correct.
     -- This one selects three columns:
@@ -120,6 +122,7 @@ BEGIN
             DBMS_OUTPUT.PUT_LINE('Bicycle ID: ' || trips.BICYCLE_ID || ' --- Trips: ' || trips."number_of_trips" || ' --- Total distance: ' || trips."total_distance");
         end loop;
     END IF;
+
 
     EXCEPTION
     WHEN ex_error THEN

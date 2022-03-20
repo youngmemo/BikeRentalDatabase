@@ -25,6 +25,8 @@ IS
 
 BEGIN
 
+    -- Checks if the program id given exists.
+    -- If not, raises exception.
     SELECT COUNT(*)
     INTO lv_program_counter
     FROM BC_PROGRAM
@@ -34,6 +36,7 @@ BEGIN
     lv_error_txt := 'Invalid Program: ' || p_program_id;
     RAISE ex_error;
     END IF;
+
 
     -- Checks if something is written in the p_station_id parameter
     IF p_station_id IS NULL THEN
@@ -160,6 +163,7 @@ BEGIN
     p_program_id
     );
 
+
 EXCEPTION
     WHEN ex_error THEN
     DBMS_OUTPUT.PUT_LINE(lv_error_txt);
@@ -171,5 +175,6 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
 
-    commit;
+    COMMIT;
+
 END CREATE_STATION_PP;

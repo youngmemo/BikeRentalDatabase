@@ -30,6 +30,7 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+
     -- Checks if the station_id written exists in the BC_STATION table.
     -- If not, raises exception.
     SELECT COUNT(*)
@@ -52,6 +53,7 @@ BEGIN
         AND BC_BICYCLE.BICYCLE_TYPE = lv_lowercase_type;
 
     RETURN lv_total_amount;
+
 
 EXCEPTION
     WHEN ex_error THEN

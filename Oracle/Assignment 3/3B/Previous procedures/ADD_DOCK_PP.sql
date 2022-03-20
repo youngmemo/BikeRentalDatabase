@@ -39,6 +39,7 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+
     -- Checks if the given dock id already exists
     -- If it does, throws an exception.
     SELECT COUNT(*)
@@ -75,12 +76,14 @@ BEGIN
     RAISE ex_error;
     END IF;
 
+
     -- Checks if the given dock id is higher than 0
     -- If not, throws an exception.
     IF p_dock_id < 0 THEN
     lv_error_txt := 'Invalid dock number: ' || p_dock_id;
     RAISE ex_error;
     END IF;
+
 
     -- Inserts the values in the BC_DOCK table.
     INSERT INTO BC_DOCK (
@@ -95,6 +98,7 @@ BEGIN
     p_dock_status,
     p_bicycle_id
     );
+
 
     EXCEPTION
     WHEN ex_error THEN

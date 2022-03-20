@@ -31,10 +31,12 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+
     -- Checks if the value written in the p_bicycle_id parameter is in the BC_Bicycle table.
     -- If not, throws an exception.
     SELECT COUNT(*)
-    INTO lv_stationid_counter   FROM BC_STATION
+    INTO lv_stationid_counter
+    FROM BC_STATION
     WHERE BC_STATION.STATION_ID = p_station_id;
 
     IF lv_stationid_counter= 0 THEN
@@ -54,6 +56,7 @@ BEGIN
     FROM BC_DOCK
     WHERE BC_DOCK.STATION_ID = p_station_id AND BC_DOCK.DOCK_STATUS = 'occupied';
 
+
     -- Checks if the station is renting vehicles with the updated values
     IF lv_count_vehicles_available > 0 THEN
         UPDATE BC_STATION
@@ -68,14 +71,14 @@ BEGIN
         WHERE BC_STATION.STATION_ID = p_station_id;
     END IF;
 
+
     UPDATE BC_STATION
     SET STATION_DOCKS_AVAILABLE = lv_count_docks_available,
         STATION_VEHICLES_AVAILABLE = lv_count_vehicles_available,
         STATION_LAST_REPORTED = lv_final_date
     WHERE BC_STATION.STATION_ID = p_station_id;
 
-
-
+    
     EXCEPTION
     WHEN ex_error THEN
     DBMS_OUTPUT.PUT_LINE(lv_error_txt);

@@ -27,6 +27,7 @@ BEGIN
        lv_final_date := p_update;
    END IF;
 
+
     -- Updates the BC_BICYCLE table for the given bicycle_id
    UPDATE BC_BICYCLE
    SET BICYCLE_STATUS = 'not available',
@@ -39,6 +40,7 @@ BEGIN
        DOCK_STATUS = 'unoccupied'
    WHERE BICYCLE_ID = p_bicycle_id;
 
+
     -- Runs the UPDATE_BICYCLE_STATUS.
    UPDATE_BICYCLE_STATUS_PP
    (p_bicycle_id,
@@ -48,6 +50,7 @@ BEGIN
     NULL,
     'not available',
     lv_final_date);
+
 
     -- Inserts values into the BC_BICYCLE_STATUS table
    INSERT INTO BC_BICYCLE_STATUS
@@ -68,10 +71,9 @@ BEGIN
     NULL,
     'not available');
 
+COMMIT;
 
-    COMMIT;
-
-    EXCEPTION
+EXCEPTION
     WHEN ex_error THEN
     DBMS_OUTPUT.PUT_LINE(lv_error_txt);
     ROLLBACK;
@@ -82,4 +84,4 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Error msg:     ' || SQLERRM);
     ROLLBACK;
 
-    END REMOVE_BICYCLE_PP;
+END REMOVE_BICYCLE_PP;

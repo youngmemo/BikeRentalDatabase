@@ -20,6 +20,7 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+
     -- Checks if the station_id written exists in the BC_STATION table.
     -- If not, raises exception.
     SELECT COUNT(*)
@@ -43,6 +44,7 @@ BEGIN
         lv_error_txt := 'No bicycles available.';
         RAISE ex_error;
     END IF;
+
 
     -- Prints out the bicycles that are available in a loop.
     FOR BICYCLE IN (
