@@ -1,0 +1,6 @@
+TODO
+
+- Jeg må fikse slik at ERROR-ene som blir forårsaket blir logget.
+- Spørre Peter eller LA om NULL value på range og power kolonnene på REMOVE_BICYCLE_PP
+
+    -- to_date('22/02/2022 00:00:00', 'dd/mm/yyyy hh24:mi:ss');

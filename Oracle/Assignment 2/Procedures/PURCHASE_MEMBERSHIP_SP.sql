@@ -13,7 +13,7 @@ create or replace procedure PURCHASE_MEMBERSHIP_SP (
 
     IS
 
-ex_error                    EXCEPTION;
+    ex_error                    EXCEPTION;
 
     lv_error_txt                VARCHAR(200);
     lv_exists                   INTEGER;
@@ -59,33 +59,43 @@ BEGIN
         RAISE ex_error;
     END IF;
 
+-- Here we check if p_pass_type is 'Fun!Pass'
     IF p_pass_type = 'FUN!Pass' THEN
+        -- If it is then the membership will be 1 today
         SELECT (p_start_time+1) INTO lv_end_date FROM DUAL;
 
+-- Here we check if the p_pass_type is Heartland Monthly Pass, if it is- then the membership will be 30 days now.
     ELSIF p_pass_type = 'Heartland Monthly Pass' THEN
         SELECT (p_start_time+30) INTO lv_end_date FROM DUAL;
 
+-- Here we check if the p_pass_type is 'Heartland Pass (Annual pay)', if it is then the membership will be 365 days today.
     ELSIF p_pass_type = 'Heartland Pass (Annual pay)' THEN
         SELECT (p_start_time+365) INTO lv_end_date FROM DUAL;
     end if;
 
+    --Here we give the lv_pass_id variable the value that will be on pass_id, for the pass_type.
     SELECT PASS_ID INTO lv_pass_id
     FROM BC_PASS
     WHERE BC_PASS.PASS_TYPE = p_pass_type;
 
+-- Here we check if pass_type exist that is given on p_pass_type
     SELECT COUNT(*) INTO lv_pass_type_counter
     FROM BC_PASS
     WHERE BC_PASS.PASS_TYPE = p_pass_type;
 
+-- If it does not find the value, then this error will come up.
     IF lv_pass_type_counter <= 0 THEN
         lv_error_txt := 'Invalid pass: ' || p_pass_type;
         RAISE ex_error;
     END IF;
 
+
+-- Here we check if account ID exist like it is given in p_account_id
     SELECT COUNT(*) INTO lv_account_counter
     FROM BC_ACCOUNT
     WHERE BC_ACCOUNT.ACCOUNT_ID = p_account_id;
 
+-- If lv_account_counter does not have a value, then print out 'invalid account'.
     IF lv_account_counter = 0 THEN
         lv_error_txt := 'Invalid account: ' || p_account_id;
         RAISE ex_error;
