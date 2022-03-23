@@ -19,61 +19,77 @@ IS
 
 BEGIN
 
-    -- Teller om eposten finnes
+    -- Counts how many emails exists on the given parameter.
     SELECT COUNT(*)
     INTO lv_email_counter
     FROM BC_ACCOUNT
     WHERE BC_ACCOUNT.ACCOUNT_EMAIL = p_account_email;
 
-    -- Hvis eposten allerede eksisterer
+    -- Checks if the email exists
+    -- If it does, throws an exception.
     IF lv_email_counter > 0  THEN
         lv_error_txt := 'Duplicate email address. Account email addresses must be unique.';
         RAISE ex_error;
     END IF;
 
-    -- Sjekker om noe er skrevet på parameterne hvor det ikke kan være null.
+    -- Checks if something is written in the p_account_first_name parameter
+    -- If not, throws an exception.
     IF p_account_first_name IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_first_name;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_last_name parameter
+    -- If not, throws an exception.
     IF p_account_last_name IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_last_name;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_password parameter
+    -- If not, throws an exception.
     IF p_account_password IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_password;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_mobile_phone parameter
+    -- If not, throws an exception.
     IF p_account_mobile_phone IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_mobile_phone;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_street parameter
+    -- If not, throws an exception.
     IF p_account_street IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_street;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_city parameter
+    -- If not, throws an exception.
     IF p_account_city IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_city;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_state_province parameter
+    -- If not, throws an exception.
     IF p_account_state_province IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_state_province;
         RAISE ex_error;
     END IF;
 
+    -- Checks if something is written in the p_account_postal_code parameter
+    -- If not, throws an exception.
      IF p_account_postal_code IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter in CREATE_ACCOUNT_SP.  No account added. ' || p_account_postal_code;
         RAISE ex_error;
     END IF;
 
 
-    -- Legger inn verdiene til tabellen
+    -- Inserts the values
     INSERT INTO
     BC_ACCOUNT (
     ACCOUNT_ID,
@@ -89,7 +105,7 @@ BEGIN
     ACCOUNT_POSTAL_CODE)
 
     VALUES (
-    (SELECT MAX(BC_ACCOUNT.ACCOUNT_ID) + 1 FROM BC_ACCOUNT), -- Legger inn +1 høyere verdi av den største ACCOUNT_ID nummeret.
+    (SELECT MAX(BC_ACCOUNT.ACCOUNT_ID) + 1 FROM BC_ACCOUNT), --Puts in +1 higher value than the highest value on highest ACCOUNT_ID number.
     p_account_first_name,
     p_account_last_name,
     p_account_email,
@@ -106,7 +122,7 @@ BEGIN
 
     COMMIT;
 
--- Exceptions med feilmeldinger
+-- Exceptions
 EXCEPTION
     WHEN ex_error THEN
         DBMS_OUTPUT.PUT_LINE(lv_error_txt);

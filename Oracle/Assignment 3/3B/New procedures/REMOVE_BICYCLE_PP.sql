@@ -41,7 +41,7 @@ BEGIN
    WHERE BICYCLE_ID = p_bicycle_id;
 
 
-    -- Runs the UPDATE_BICYCLE_STATUS.
+    -- Calls the procedure UPDATE_BICYCLE_STATUS.
    UPDATE_BICYCLE_STATUS_PP
    (p_bicycle_id,
     NULL,

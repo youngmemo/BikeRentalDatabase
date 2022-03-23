@@ -6,15 +6,11 @@ function NUMBER_OF_BICYCLES_PF (
 
     lv_stationid_counter    VARCHAR2(200);
     lv_error_txt            VARCHAR2(200);
-    lv_lowercase_type       VARCHAR2(200);
     lv_total_amount         INTEGER;
     
     ex_error                EXCEPTION;
 
 BEGIN
-
-    -- Converts the value written in the p_bicycle_type parameter to lowercase to fit the CHECK constraint.
-    lv_lowercase_type := LOWER(p_bicycle_type);
 
     -- Checks if value is written in the p_station_id parameter
     -- If not, raises exception.
@@ -50,7 +46,7 @@ BEGIN
     FROM BC_BICYCLE
         JOIN BC_DOCK ON BC_BICYCLE.BICYCLE_ID = BC_DOCK.BICYCLE_ID
     WHERE BC_DOCK.STATION_ID = p_station_id
-        AND BC_BICYCLE.BICYCLE_TYPE = lv_lowercase_type;
+        AND REGEXP_LIKE(p_bicycle_type, 'i');
 
     RETURN lv_total_amount;
 

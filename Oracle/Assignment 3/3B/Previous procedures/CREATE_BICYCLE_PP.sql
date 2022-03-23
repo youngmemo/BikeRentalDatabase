@@ -24,55 +24,62 @@ IS
 
 BEGIN
 
-    -- Teller antall sykler gjennom gitte verdi på parameter p_bicycle_id
+    -- Counts total bicycles through the given parameter p_bicycle_id
     SELECT COUNT(*)
     INTO lv_bicycle_counter
     FROM BC_BICYCLE
     WHERE BC_BICYCLE.BICYCLE_ID = p_bicycle_id;
 
-    -- Sjekker om noe er skrevet på parameterne hvor det ikke kan være null.
+    -- Checks if something is written in the p_bicycle_type parameter
+    -- If not, throws an exception.
     IF p_bicycle_type IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter (p_bicycle_type) in CREATE_BICYCLE_SP. No bicycle added';
         RAISE ex_error;
     END IF;
 
-    -- Sjekker om noe er skrevet på parameterne hvor det ikke kan være null.
+    -- Checks if something is written in the p_status parameter
+    -- If not, throws an exception.
     IF p_status IS NULL THEN
         lv_error_txt := 'Missing mandatory value for parameter (p_status) in CREATE_BICYCLE_SP. No bicycle added';
         RAISE ex_error;
     END IF;
 
-    -- Sjekker om den gitte bicycle_id allerede eksisterer
+    -- Checks if the given bicycle_id exists.
     IF lv_bicycle_counter > 0 THEN
         lv_error_txt := 'Bicycle number already exists' || p_bicycle_id;
         RAISE ex_error;
     END IF;
 
-    -- At batteriet ikke kan være mindre enn 0 eller mer enn 100, ellers gis det feilmelding.
+    -- Checks if the power is between 0 and 100
+    -- If not, raises exception.
     IF p_current_power NOT BETWEEN 0 AND 100 THEN
         lv_error_txt := 'Invalid bicycle current power value: ' ||  p_current_power;
         RAISE ex_error;
     END IF;
 
-    -- At breddegraden ikke kan være mindre enn -90 eller mer enn 90, ellers gis det feilmelding.
+    -- Checks if the latitude is between -90 and 90.
+    -- If not, throws an exception.
     IF p_latitude NOT BETWEEN -90 AND 90 THEN
         lv_error_txt:= 'Invalid Latitude: ' || p_latitude;
         RAISE ex_error;
     END IF;
 
-    -- At lengdegraden ikke kan være mindre enn -180 eller mer enn 180, ellers gis det feilmelding.
+    -- Checks if the longitude is between -180 and 180.
+    -- If not, throws an exception.
     IF p_longitude NOT BETWEEN -180 AND 180 THEN
         lv_error_txt := 'Invalid longitude: ' || p_longitude;
         RAISE ex_error;
     END IF;
 
-    -- Det vises hvor langt sykkelen har gått, derfor kan verdien ikke være mindre enn 0, ellers gis det feilmelding.
+    -- Checks if the current range is higher than 0.
+    -- If not, throws an exception.
     IF p_current_range < 0 THEN
         lv_error_txt := 'Invalid range: ' || p_current_range;
         RAISE ex_error;
     END IF;
 
     -- At kapasiteten på sykkelen ikke kan være mindre enn 0, ellers gis det feil melding.
+    -- Checks if the capacity of the bicycle cant be less than 0
     IF p_capacity < 0 THEN
         lv_error_txt := 'Invalid bicycle rider capacity: ' || p_capacity;
         RAISE ex_error;

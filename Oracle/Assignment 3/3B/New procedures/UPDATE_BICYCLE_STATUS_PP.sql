@@ -44,7 +44,7 @@ BEGIN
 
     -- Checks if value is written in the p_bicycle_id parameter fits the CHECK constraint values
     -- If not, raises exception.
-    IF p_status != 'in use' OR p_status != 'available' OR p_status != 'not available' THEN
+    IF p_status NOT IN ('in use', 'available', 'not available') THEN
         lv_error_txt := 'Invalid bicycle status ' || p_status;
         RAISE ex_error;
     END IF;
