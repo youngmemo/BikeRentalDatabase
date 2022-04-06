@@ -1,0 +1,42 @@
+-- SELV OM DET ER OVER 100M GJØR DET OM TIL 10M FORDI PETER WOLCOTT SIER VI SKAL BRUKE 10 FORDI DET BLIR FOR MYE PLASS.
+
+SELECT * FROM dba_data_files;
+
+CREATE TABLESPACE bcycle1M
+datafile '/u01/app/oracle/odata/WOLCOTTDB/bcycle1M.dbf' SIZE 10M AUTOEXTEND ON
+EXTENT MANAGEMENT LOCAL UNIFORM SIZE 1M
+SEGMENT SPACE MANAGEMENT AUTO;
+
+CREATE TABLESPACE bcycle64K
+datafile '/u01/app/oracle/odata/WOLCOTTDB/bcycle64K.dbf' SIZE 1M AUTOEXTEND ON
+EXTENT MANAGEMENT LOCAL UNIFORM SIZE 64K
+SEGMENT SPACE MANAGEMENT AUTO;
+
+CREATE TABLESPACE bcycle128K
+datafile '/u01/app/oracle/odata/WOLCOTTDB/bcycle128K.dbf' SIZE 1M AUTOEXTEND ON
+EXTENT MANAGEMENT LOCAL UNIFORM SIZE 128K
+SEGMENT SPACE MANAGEMENT AUTO;
+
+ALTER TABLE volunter.vm_organization -- bruker ikke dette navnet men peter eksempel
+MOVE TABLESPACE bcycle1M
+STORAGE (INITIAL 44M NEXT 1M)
+PCTFREE 15;
+
+ALTER TABLE volunter.vm_opportunity -- bruker ikke dette navnet men peter eksempel
+MOVE TABLESPACE bcycle1M
+STORAGE (INITIAL 31M NEXT 1M)
+PCTFREE 5;
+
+ALTER TABLE volunter.vm_cause -- bruker ikke dette navnet men peter eksempel
+MOVE TABLESPACE bcycle64K
+STORAGE (INITIAL 64K NEXT 64K)
+PCTFREE 0;
+
+ALTER TABLE volunter.vm_orgcauase -- bruker ikke dette navnet men peter eksempel
+MOVE TABLESPACE bcycle128K
+STORAGE (INITIAL 5248K NEXT 128K)
+PCTFREE 0;
+
+
+SELECT * FROM dba_tables
+WHERE owner = 'XOXOGOSSIP' AND table_name = 'vm_organization';
