@@ -17,7 +17,6 @@ CREATE PROFILE
 - Be aware that CPU_PER_SESSION 360000 = 1h
 x Skal vi få denne opp til 3 eller 4 timer kanskje?
 
-
 PORTFOLIO OPPGAVEN
 - Assignment 3B er rettet på branchen "memo"
 - Assignment 3B skal ha PLSQL kode for package specification og package body
