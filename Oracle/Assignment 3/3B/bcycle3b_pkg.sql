@@ -1249,6 +1249,7 @@ BEGIN
         STATION_LAST_REPORTED = lv_final_date
     WHERE BC_STATION.STATION_ID = p_station_id;
 
+    COMMIT;
 
     EXCEPTION
     WHEN ex_error THEN

@@ -1,6 +1,24 @@
 TODO
 
-- Jeg må fikse slik at ERROR-ene som blir forårsaket blir logget.
-- Spørre Peter eller LA om NULL value på range og power kolonnene på REMOVE_BICYCLE_PP
+CALCULATE THE SIZE OF EACH TABLE
+- You can assume that the current amount of Rows in BC_COUNTRY is 249, and that it won't expand in the future.
 
-    -- to_date('22/02/2022 00:00:00', 'dd/mm/yyyy hh24:mi:ss');
+SEPERATE TABLES INTO GROUPS
+- BC_COUNTRY should be fit into a tablespace
+
+CREATION OF TABLESPACES
+- Additionally, look over your formula for size for one year once more. It appears faulty.
+You need to also move BC_COUNTRY.
+
+2.5e DIFFICULTIES
+- Oracle does not allow granting privileges on parts of a package, your solution is correct.
+
+CREATE PROFILE
+- Be aware that CPU_PER_SESSION 360000 = 1h
+x Skal vi få denne opp til 3 eller 4 timer kanskje?
+
+
+PORTFOLIO OPPGAVEN
+- Assignment 3B er rettet på branchen "memo"
+- Assignment 3B skal ha PLSQL kode for package specification og package body
+
