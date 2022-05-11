@@ -265,7 +265,7 @@ procedure LIST_AVAILABLE_BICYCLES_PP (
     );
 
 /* 
-LIST_AVAILABLE_BICYCLES_PP.  For a given time window (defined by a start date 
+BICYCLE_SUMMARY_PP.  For a given time window (defined by a start date 
 and an end date) and program, this procedure lists each bicycle used on at least 
 one trip within that time window and its type, listing the bicycle id, the number 
 of trips and the total distance ridden.  If the start date is later then the end 
