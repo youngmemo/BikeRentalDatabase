@@ -1,2 +1,2 @@
 # SQLDatabase
-Repository for Videregående database 2022 for gruppe XOXOGOSSIPGANG
+School project in Oracle PLSQL for bike rentals
